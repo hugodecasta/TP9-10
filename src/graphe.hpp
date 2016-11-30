@@ -36,6 +36,6 @@ void drawGraph(const Graph& g);
 
 
 void initVectorStatus(const Graph& g, v_status v);
-void setVectorStatus(v_status vect, unsigned i, unsigned j, unsigned c, color c);
+void setVectorStatus(v_status vect, unsigned i, unsigned j, unsigned width, color c);
 
 #endif /* GRAPHE_HPP */
