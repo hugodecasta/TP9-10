@@ -111,7 +111,7 @@ void drawGraph(const Graph& g)
 }
 
 
-void initVectorStatus(const Graph& g, v_status vect)
+void initVectorStatus(const Graph& g, v_status& vect)
 {
 	for (unsigned j = 0; j < g.height; j++) {
 		for (unsigned i = 0; i < g.width; i++)
@@ -119,7 +119,30 @@ void initVectorStatus(const Graph& g, v_status vect)
 	}
 }
 
-void setVectorStatus(v_status vect, unsigned i, unsigned j, unsigned width, color c)
+void setVectorStatus(v_status& vect, unsigned i, unsigned j, unsigned width, color c)
 {
 	vect[i * width + j] = c;
+}
+
+void drawVectorStatus(const Graph& g, const v_status& vect)
+{
+	for (unsigned j = 0; j < g.height; j++) {
+		for (unsigned i = 0; i < g.width; i++) {
+			switch (vect[j * g.width + i]) {
+				case white:
+					cout << "B";
+					break;
+				case grey:
+					cout << "G";
+					break;
+				case black:
+					cout << "N";
+					break;
+				default:
+					break;
+			}
+			cout << " ";
+		}
+	}
+	cout << endl;
 }
