@@ -38,7 +38,8 @@ void drawGraph(const Graph& g);
 
 void initVectorStatus(const Graph& g, v_status& v);
 void setVectorStatus(v_status& vect, unsigned i, unsigned j, unsigned width, color c);
+void drawVectorStatus(const Graph& g, const v_status& vect);
 
-void Dijkstra(const Graphe& g, unsigned iStart, unsigned jStart, unsigned iEnd, unsigned jEnd);
+void Dijkstra(const Graph& g, unsigned iStart, unsigned jStart, unsigned iEnd, unsigned jEnd);
 
 #endif /* GRAPHE_HPP */
