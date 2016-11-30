@@ -1,6 +1,6 @@
 CC=g++
 CFLAGS=-c -Wall -ansi -std=c++11 -Wno-unused-parameter -Wno-unused-function
-SOURCES=src/*.cpp
+SOURCES=src/main.cpp src/graphe.cpp
 OBJECTS=$(SOURCES:.cpp=.o)
 EXEC=graphe.exe
 

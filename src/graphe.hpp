@@ -1,5 +1,11 @@
-#ifndef "GRAPHE_H"
-#define "GRAPHE_H"
+#ifndef GRAPHE_H
+#define GRAPHE_H
+
+#include <fstream>
+#include <string>
+#include <ostream>
+#include <iostream>
+using namespace std;
 
 ////////////////////////////// DATAS
 
@@ -14,25 +20,27 @@ enum orient
 	self
 };
 
-typedef struct Grid
+typedef struct Graph
 {
 	
 	unsigned width, height;
-	vertex* graphe;
+	vertex* grid;
 
-}Grid;
+} Graph;
 
 ////////////////////////////// METHODS
 
 //----
-void initGrid(Grid& g, unsigned width, unsigned height);
+void initGrid(Graph& g, unsigned width, unsigned height);
 //----
-void pruneGrid(Grid& g);
+void loadGrid(string filename, Graph& g);
 //----
-void setVertex(Grid& g, unsigned i, unsigned j, vertex v);
+void pruneGrid(Graph& g);
 //----
-vertex getVertex(const Grid& g, unsigned i, unsigned j, orient o);
+void setVertex(Graph& g, unsigned i, unsigned j, vertex v);
 //----
-void drawGrid(const Grid& g);
+vertex getVertex(const Graph& g, unsigned i, unsigned j, orient o);
+//----
+void drawGrid(const Graph& g);
 
 #endif
