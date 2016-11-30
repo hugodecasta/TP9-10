@@ -12,7 +12,7 @@ void initGraph(Graph& g, unsigned width, unsigned height)
 	g.grid = new vertex[width * height];
 }
 //----
-void loadGraph(string filename, Grid& g)
+void loadGraph(string filename, Graph& g)
 {
 	// file reading tools init
 	int lineCount = 0;
@@ -29,7 +29,7 @@ void loadGraph(string filename, Grid& g)
 			int jH = stoi(line.substr(1, line.find(" ")));
 			if(lineCount == 0)
 			{
-				initGrid(g, iW, jH);
+				initGraph(g, iW, jH);
 			}
 			else
 			{
