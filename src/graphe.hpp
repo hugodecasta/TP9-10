@@ -11,18 +11,10 @@ using namespace std;
 
 #define vertex int
 
-enum orient
-{
-	north,
-	south,
-	east,
-	west,
-	self
-};
+enum orient { north, south, east, west, self };
 
 typedef struct Graph
 {
-	
 	unsigned width, height;
 	vertex* grid;
 
@@ -31,16 +23,16 @@ typedef struct Graph
 ////////////////////////////// METHODS
 
 //----
-void initGrid(Graph& g, unsigned width, unsigned height);
+void initGraph(Graph& g, unsigned width, unsigned height);
 //----
-void loadGrid(string filename, Graph& g);
+void loadGraph(string filename, Graph& g);
 //----
-void pruneGrid(Graph& g);
+void pruneGraph(Graph& g);
 //----
 void setVertex(Graph& g, unsigned i, unsigned j, vertex v);
 //----
 vertex getVertex(const Graph& g, unsigned i, unsigned j, orient o);
 //----
-void drawGrid(const Graph& g);
+void drawGraph(const Graph& g);
 
-#endif
+#endif /* GRAPHE_HPP */
