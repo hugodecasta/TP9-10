@@ -1,4 +1,7 @@
 #include "graphe.hpp"
+#include <fstream>
+#include <string>
+#include <ostream>
 #include <iostream>
 
 using namespace std;
@@ -11,8 +14,8 @@ void initGraph(Graph& g, unsigned width, unsigned height)
 	g.height = height;
 	g.grid = new vertex[width * height];
 }
-//----
-void loadGraph(string filename, Grid& g)
+
+void loadGraph(string filename, Graph& g)
 {
 	// file reading tools init
 	int lineCount = 0;
@@ -29,7 +32,7 @@ void loadGraph(string filename, Grid& g)
 			int jH = stoi(line.substr(1, line.find(" ")));
 			if(lineCount == 0)
 			{
-				initGrid(g, iW, jH);
+				initGraph(g, iW, jH);
 			}
 			else
 			{
@@ -89,3 +92,16 @@ void drawGraph(const Graph& g)
 	}
 }
 
+
+void initVectorStatus(const Graph& g, v_status vect)
+{
+	for (unsigned j = 0; j < g.height; j++) {
+		for (unsigned i = 0; i < g.width; i++)
+			vect.push_back(white);
+	}
+}
+
+void setVectorStatus(v_status vect, unsigned i, unsigned j, unsigned width, color c)
+{
+	vect[i * width + j] = c;
+}
