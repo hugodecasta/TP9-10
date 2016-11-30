@@ -1,7 +1,10 @@
 #include <iostream>
-#include "graphe.h"
+#include "graphe.hpp"
 
-void main()
+using namespace std;
+
+int main()
 {
 	cout << "Hello World !" << endl;
+	return 0;
 }
