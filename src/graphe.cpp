@@ -111,7 +111,7 @@ void drawGraph(const Graph& g)
 }
 
 
-void initVectorStatus(const Graph& g, v_status vect)
+void initVectorStatus(const Graph& g, v_status& vect)
 {
 	for (unsigned j = 0; j < g.height; j++) {
 		for (unsigned i = 0; i < g.width; i++)
@@ -119,7 +119,15 @@ void initVectorStatus(const Graph& g, v_status vect)
 	}
 }
 
-void setVectorStatus(v_status vect, unsigned i, unsigned j, unsigned width, color c)
+void setVectorStatus(v_status& vect, unsigned i, unsigned j, unsigned width, color c)
 {
 	vect[i * width + j] = c;
+}
+
+void Dijkstra(const Graphe& g, unsigned iStart, unsigned jStart, unsigned iEnd, unsigned jEnd)
+{
+	v_status status;
+	initVectorStatus(g, status);
+
+	
 }

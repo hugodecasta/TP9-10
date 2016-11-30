@@ -34,8 +34,11 @@ vertex getVertex(const Graph& g, unsigned i, unsigned j, orient o); // Le vertex
 
 void drawGraph(const Graph& g);
 
+////////////////////////////// PARCOURS
 
-void initVectorStatus(const Graph& g, v_status v);
-void setVectorStatus(v_status vect, unsigned i, unsigned j, unsigned width, color c);
+void initVectorStatus(const Graph& g, v_status& v);
+void setVectorStatus(v_status& vect, unsigned i, unsigned j, unsigned width, color c);
+
+void Dijkstra(const Graphe& g, unsigned iStart, unsigned jStart, unsigned iEnd, unsigned jEnd);
 
 #endif /* GRAPHE_HPP */

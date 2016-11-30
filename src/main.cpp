@@ -9,5 +9,7 @@ int main()
 
 	drawGraph(g);
 
+	Dijkstra(g, 5, 5, 0, 0);
+
 	return 0;
 }
