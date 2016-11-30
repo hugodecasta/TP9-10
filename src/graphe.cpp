@@ -3,9 +3,24 @@
 #include <string>
 #include <ostream>
 #include <iostream>
+#include <vector>
+#include <sstream>
 
 using namespace std;
 
+vector<string> split(string str, char delimiter)
+{
+	vector<string> internal;
+	stringstream ss(str); // Turn the string into a stream.
+	string tok;
+
+	while(getline(ss, tok, delimiter))
+	{
+		internal.push_back(tok);
+	}
+
+	return internal;
+}
 //////////////////////////////// METHODS
 
 void initGraph(Graph& g, unsigned width, unsigned height)
@@ -28,16 +43,19 @@ void loadGraph(string filename, Graph& g)
 		// reading file
 		while(getline(myfile,line))
 		{
-			int iW = stoi(line.substr(0, line.find(" ")));
-			int jH = stoi(line.substr(1, line.find(" ")));
+			vector<string> parts = split(line, ' ');
+
+			int jW = atoi(parts.at(0).c_str());
+			int iH = atoi(parts.at(1).c_str());
+
 			if(lineCount == 0)
 			{
-				initGraph(g, iW, jH);
+				initGraph(g, jW, iH);
 			}
 			else
 			{
-				vertex v = stoi(line.substr(2, line.find(" ")));
-				setVertex(g, iW, jH, v);
+				vertex v = atoi(parts.at(2).c_str());			
+				setVertex(g, iH, jW, v);
 			}
 			++lineCount;
 		}
@@ -87,7 +105,7 @@ void drawGraph(const Graph& g)
 {
 	for (unsigned j = 0; j < g.height; j++) {
 		for (unsigned i = 0; i < g.width; i++)
-			cout << g.grid[i * g.width + j] << " ";
+			cout << g.grid[j * g.width + i] << " ";
 		cout << endl;
 	}
 }
