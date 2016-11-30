@@ -1,38 +1,30 @@
-#ifndef "GRAPHE_H"
-#define "GRAPHE_H"
+#ifndef GRAPHE_HPP
+#define GRAPHE_HPP
 
 ////////////////////////////// DATAS
 
 #define vertex int
 
-enum orient
-{
-	north,
-	south,
-	east,
-	west,
-	self
-};
+enum orient { north, south, east, west, self };
 
-typedef struct Grid
+typedef struct Graph
 {
-	
 	unsigned width, height;
-	vertex* graphe;
+	vertex* grid;
 
-}Grid;
+} Graph;
 
 ////////////////////////////// METHODS
 
 //----
-void initGrid(Grid& g, unsigned width, unsigned height);
+void initGraph(Graph& g, unsigned width, unsigned height);
 //----
-void pruneGrid(Grid& g);
+void pruneGraph(Graph& g);
 //----
-void setVertex(Grid& g, unsigned i, unsigned j, vertex v);
+void setVertex(Graph& g, unsigned i, unsigned j, vertex v);
 //----
-vertex getVertex(const Grid& g, unsigned i, unsigned j, orient o);
+vertex getVertex(const Graph& g, unsigned i, unsigned j, orient o);
 //----
-void drawGrid(const Grid& g);
+void drawGraph(const Graph& g);
 
-#endif
+#endif /* GRAPHE_HPP */
