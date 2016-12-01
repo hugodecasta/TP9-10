@@ -205,33 +205,33 @@ void Profondeur(const Graph& g, unsigned iStart, unsigned jStart)
     initVectorStatus(g, status);
     setVectorStatus(status, iStart, jStart, g.width, grey);
 
-    stack<Pos> file;
-    file.push({iStart, jStart});
+    stack<Pos> pile;
+    pile.push({iStart, jStart});
 
     Pos pos_actuelle;
 
-    while(!file.empty()) {
-        pos_actuelle = file.top();
+    while(!pile.empty()) {
+        pos_actuelle = pile.top();
+        pile.pop();
 
         if (((int) pos_actuelle.i - 1 >= 0) && (status[(pos_actuelle.i - 1) * g.width + pos_actuelle.j] == white)) {
             setVectorStatus(status, pos_actuelle.i - 1, pos_actuelle.j, g.width, grey);
-            file.push({pos_actuelle.i - 1, pos_actuelle.j});
+            pile.push({pos_actuelle.i - 1, pos_actuelle.j});
         }
 
         if ((pos_actuelle.i + 1 < g.height) && (status[(pos_actuelle.i + 1) * g.width + pos_actuelle.j] == white)) {
             setVectorStatus(status, pos_actuelle.i + 1, pos_actuelle.j, g.width, grey);
-            file.push({pos_actuelle.i + 1, pos_actuelle.j});
+            pile.push({pos_actuelle.i + 1, pos_actuelle.j});
         }
         if (((int) pos_actuelle.j - 1 >= 0) && (status[pos_actuelle.i * g.width + (pos_actuelle.j - 1)] == white)) {
             setVectorStatus(status, pos_actuelle.i, pos_actuelle.j - 1, g.width, grey);
-            file.push({pos_actuelle.i, pos_actuelle.j - 1});
+            pile.push({pos_actuelle.i, pos_actuelle.j - 1});
         }
         if ((pos_actuelle.j + 1 < g.width) && (status[pos_actuelle.i * g.width + (pos_actuelle.j + 1)] == white)) {
             setVectorStatus(status, pos_actuelle.i, pos_actuelle.j + 1, g.width, grey);
-            file.push({pos_actuelle.i, pos_actuelle.j + 1});
+            pile.push({pos_actuelle.i, pos_actuelle.j + 1});
         }
 
-        file.pop();
         setVectorStatus(status, pos_actuelle.i, pos_actuelle.j, g.width, black);
         system("clear");
         drawVectorStatus(g, status);
