@@ -7,9 +7,8 @@ int main()
 
 	loadGraph(filename,g);
 
-	drawGraph(g);
-
-	Dijkstra(g, 5, 5, 0, 0);
+	//Largeur(g, 5, 5);
+	Profondeur(g, 5, 5);
 
 	return 0;
 }

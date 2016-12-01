@@ -11,8 +11,11 @@ using namespace std;
 ////////////////////////////// DATAS
 
 typedef int vertex;
-typedef struct Graph
-{
+typedef struct Pos {
+    unsigned i, j;
+} Pos;
+
+typedef struct Graph {
 	unsigned width, height;
 	vertex* grid;
 
@@ -41,5 +44,7 @@ void setVectorStatus(v_status& vect, unsigned i, unsigned j, unsigned width, col
 void drawVectorStatus(const Graph& g, const v_status& vect);
 
 void Dijkstra(const Graph& g, unsigned iStart, unsigned jStart, unsigned iEnd, unsigned jEnd);
+void Largeur(const Graph& g, unsigned iStart, unsigned jStart);
+void Profondeur(const Graph& g, unsigned iStart, unsigned jStart);
 
 #endif /* GRAPHE_HPP */
