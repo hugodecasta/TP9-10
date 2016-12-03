@@ -306,7 +306,8 @@ void Dijkstra(appParameters parameters, const Graph& g, unsigned iStart, unsigne
 		if(parameters.drawMemory)
 		{
 			priority_queue<dijkstraNode> file2(file);
-			for(unsigned i=0;i<file2.size();++i)
+			unsigned size = file2.size();
+			for(unsigned i=0;i<size;++i)
 			{
 				cout << file2.top() << endl;
 				file2.pop();
@@ -315,7 +316,10 @@ void Dijkstra(appParameters parameters, const Graph& g, unsigned iStart, unsigne
 		if(parameters.useInput)
 			getchar();
 		else
-			system("sleep 0.5");
+		{
+			string sleeper = "sleep " + to_string(parameters.delay);
+			system(sleeper.c_str());
+		}
 	}
 }
 ////////////////////////////////////////////////////////////////////////////
@@ -358,7 +362,8 @@ void Largeur(appParameters parameters, const Graph& g, unsigned iStart, unsigned
 		if(parameters.drawMemory)
 		{
 			queue<Pos> file2(file);
-			for(unsigned i=0;i<file2.size();++i)
+			unsigned size = file2.size();
+			for(unsigned i=0;i<size;++i)
 			{
 				cout << file2.front() << endl;
 				file2.pop();
@@ -367,7 +372,10 @@ void Largeur(appParameters parameters, const Graph& g, unsigned iStart, unsigned
 		if(parameters.useInput)
 			getchar();
 		else
-			system("sleep 0.5");
+		{
+			string sleeper = "sleep " + to_string(parameters.delay);
+			system(sleeper.c_str());
+		}
     }
 }
 ////////////////////////////////////////////////////////////////////////////
@@ -410,7 +418,8 @@ void Profondeur(appParameters parameters, const Graph& g, unsigned iStart, unsig
 		if(parameters.drawMemory)
 		{
 			stack<Pos> pile2(pile);
-			for(unsigned i=0;i<pile2.size();++i)
+			unsigned size = pile2.size();
+			for(unsigned i=0;i<size;++i)
 			{
 				cout << pile2.top() << endl;
 				pile2.pop();
@@ -419,6 +428,9 @@ void Profondeur(appParameters parameters, const Graph& g, unsigned iStart, unsig
 		if(parameters.useInput)
 			getchar();
 		else
-			system("sleep 0.5");
+		{
+			string sleeper = "sleep " + to_string(parameters.delay);
+			system(sleeper.c_str());
+		}
     }
 }

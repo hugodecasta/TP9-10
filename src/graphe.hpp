@@ -19,6 +19,7 @@ typedef struct dijkstraNode {
 	Pos position;
 	Pos last;
 	int distance;
+	
 } dijkstraNode;
 
 typedef struct Graph {
@@ -41,6 +42,8 @@ typedef struct appParameters
 	bool useColor;
 	bool drawMemory;
 	bool useInput;
+	float delay;
+	
 } appParameters;
 
 ////////////////////////////// METHODS

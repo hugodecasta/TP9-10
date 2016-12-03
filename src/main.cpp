@@ -13,8 +13,8 @@ void drawUsage()
 	cout << "\t-c : afficher la trace avec couleurs" << endl;
 	cout << "\t-m : afficher l'objet mémoire utiliser (pile, file ...)" << endl;
 	cout << "\t-i : utiliser un input utilisateur entre chaque itération au lieu d'un Delay" << endl;
+	cout << "\t-t <delay> : temps (seconde) entre deux itérations lors d'une execution automatique" << endl;
 }
-
 
 bool parseArgv(int argc, char* argv[], appParameters& aParams)
 {
@@ -36,8 +36,17 @@ bool parseArgv(int argc, char* argv[], appParameters& aParams)
 		string col = "-c";
 		string mem = "-m";
 		string inp = "-i";
+		string tem = "-t";
+		bool waitForTime = false;
 		for(int i=3; i<argc;++i)
 		{
+			if(waitForTime)
+			{
+				string delay_str = argv[i];
+				aParams.delay = stof(delay_str);
+				waitForTime = false;
+				continue;
+			}
 			string option = argv[i];
 			if (option.compare(col) == 0)
 				aParams.useColor = true;
@@ -45,6 +54,8 @@ bool parseArgv(int argc, char* argv[], appParameters& aParams)
 				aParams.drawMemory = true;
 			else if (option.compare(inp) == 0)
 				aParams.useInput = true;
+			else if (option.compare(tem) == 0)
+				waitForTime = true;
 		}
 	}
 	
