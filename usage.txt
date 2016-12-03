@@ -1,0 +1,14 @@
+Usage : <filename> <algorithm> [Options]
+
+ filename:
+	le fichier *.grd contenant le graphe à utiliser
+
+ algorithm:
+	-D : parcours selon l'algorithm de Dijkstra
+	-P : parcours en profondeur
+	-L : parcours en largeure
+
+ Options:
+	-c : afficher la trace avec couleurs
+	-m : afficher l'objet mémoire utiliser (pile, file ...)
+	-i : utiliser un input utilisateur entre chaque itération au lieu d'un Delay
