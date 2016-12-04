@@ -12,6 +12,7 @@ void drawUsage()
 	cout << endl << " Options:" << endl;
 	cout << "\t-c : afficher la trace avec couleurs" << endl;
 	cout << "\t-m : afficher l'objet mémoire utiliser (pile, file ...)" << endl;
+	cout << "\t     (si vous utilisez cette option, assurez-vous que votre console soit assez grande)" << endl;
 	cout << "\t-i : utiliser un input utilisateur entre chaque itération au lieu d'un Delay" << endl;
 	cout << "\t-t <delay> : temps (seconde) entre deux itérations lors d'une execution automatique" << endl;
 }
@@ -40,15 +41,14 @@ bool parseArgv(int argc, char* argv[], appParameters& aParams)
 		bool waitForTime = false;
 		for(int i=3; i<argc;++i)
 		{
+			string option = argv[i];
 			if(waitForTime)
 			{
-				string delay_str = argv[i];
-				aParams.delay = stof(delay_str);
+				aParams.delay = stof(option);
 				waitForTime = false;
 				continue;
 			}
-			string option = argv[i];
-			if (option.compare(col) == 0)
+			else if (option.compare(col) == 0)
 				aParams.useColor = true;
 			else if (option.compare(mem) == 0)
 				aParams.drawMemory = true;
@@ -61,8 +61,11 @@ bool parseArgv(int argc, char* argv[], appParameters& aParams)
 	
 	return true;
 }
+////////////////////////////////////////////////////////////
+// MAIN
 int main(int argc, char* argv[])
 {
+	// --- parsing des paramètres
 	if(argc < 3)
 	{
 		drawUsage();
@@ -76,12 +79,14 @@ int main(int argc, char* argv[])
 		return 1;
 	}
 	
+	// --- initialisation du Graphe
 	Graph g;
 	if(!loadGraph(aParams.filename,g))
 	{
 		return 1;
 	}
 
+	// --- execution de l'algorithm de parcour
 	switch(aParams.usedAlgorithm)
 	{
 		case dijkstra:

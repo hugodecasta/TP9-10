@@ -10,6 +10,8 @@
 #include <stack>
 #include <math.h> 
 
+#define INFINI 100000
+
 using namespace std;
 
 vector<string> split(string str, char delimiter)
@@ -116,7 +118,9 @@ void drawGraph(const Graph& g)
     }
 }
 
-
+////////////////////////////////////////////////////////////////////////////
+// VECTOR STATUS USES
+////// init
 void initVectorStatus(const Graph& g, v_status& vect)
 {
     for (unsigned j = 0; j < g.height; j++) {
@@ -124,12 +128,16 @@ void initVectorStatus(const Graph& g, v_status& vect)
             vect.push_back(white);
     }
 }
-
+////// get/set
 void setVectorStatus(v_status& vect, unsigned i, unsigned j, unsigned width, color c)
 {
     vect[i * width + j] = c;
 }
-
+color getVectorStatus(const v_status& vect, unsigned i, unsigned j, unsigned width)
+{
+    return vect[i * width + j];
+}
+////// draw
 void drawVectorStatus(const Graph& g, const v_status& vect, bool useColor)
 {
     for (unsigned i = 0; i < g.height; i++) {
@@ -162,17 +170,49 @@ void drawVectorStatus(const Graph& g, const v_status& vect, bool useColor)
     }
 }
 ////////////////////////////////////////////////////////////////////////////
+// DIJKSTRA MAP USES
+////// init
+void initDijkstraMap(const Graph& g, dijkstra_map& dMap)
+{
+	for (unsigned i = 0; i < g.height; i++) {
+        for (unsigned j = 0; j < g.width; j++) {
+			dMap.push_back({{i,j},{i,j},INFINI});
+		}
+	}
+}
+////// get/set
+void setDijkstraMapDistance(dijkstra_map& dMap, unsigned i, unsigned j, unsigned width, unsigned distance)
+{
+	dMap[i * width + j].distance = distance;
+}
+void setDijkstraMapLast(dijkstra_map& dMap, unsigned i, unsigned j, unsigned width, unsigned i1, unsigned j1)
+{
+	dMap[i * width + j].last = {i1, j1};
+}
+unsigned getDijkstraMapDistance(const dijkstra_map& dMap, unsigned i, unsigned j, unsigned width)
+{
+	return dMap[i * width + j].distance;
+}
+Pos getDijkstraMapLast(const dijkstra_map& dMap, unsigned i, unsigned j, unsigned width)
+{
+	return dMap[i * width + j].last;
+}
+dijkstraNode getDijkstraMapNode(const dijkstra_map& dMap, unsigned i, unsigned j, unsigned width)
+{
+	return dMap[i * width + j];
+}
+////// draw
 void drawDijkstraMap(const Graph& g, const dijkstra_map& dMap, const v_status& vect, bool useColor)
 {
     for (unsigned i = 0; i < g.height; i++) {
         for (unsigned j = 0; j < g.width; j++) {
 			
-			int dist = dMap[i * g.width + j].distance;
+			unsigned dist = getDijkstraMapDistance(dMap,i,j,g.width);
 			string toDraw = " ● ";
-			if(dist < 10000)
+			if(dist < INFINI)
 				toDraw = to_string(dist);
 			
-            switch (vect[i * g.width + j]) {
+            switch (getVectorStatus(vect,i,j,g.width)) {
                 case white:
 					if(useColor)
 						cout << "\033[31;1m" << setfill('0') << setw(3) << toDraw << "\033[0m";
@@ -193,14 +233,13 @@ void drawDijkstraMap(const Graph& g, const dijkstra_map& dMap, const v_status& v
                     break;
                 default:
                     break;
-            }
-			
-			Pos last = dMap[i * g.width + j].last;
+            }			
+			Pos last = getDijkstraMapLast(dMap,i,j,g.width);
 			if(last.i == i && last.j == j+1)
 				cout << "← ";
 			else if(j<g.width)
 			{
-				Pos last2 = dMap[i * g.width + j+1].last;
+				Pos last2 = getDijkstraMapLast(dMap,i,j+1,g.width);
 				if(last2.i == i && last2.j == j)
 					cout << "→ ";
 				else
@@ -210,12 +249,12 @@ void drawDijkstraMap(const Graph& g, const dijkstra_map& dMap, const v_status& v
 		cout << endl;
 		for (unsigned j = 0; j < g.width; j++)
 		{
-			Pos last = dMap[i * g.width + j].last;
+			Pos last = getDijkstraMapLast(dMap,i,j,g.width);
 			if(last.i == i+1 && last.j == j)
 				cout << " ↑";
 			else if(i<g.height)
 			{
-				Pos last2 = dMap[(i+1) * g.width + j].last;
+				Pos last2 = getDijkstraMapLast(dMap,i+1,j,g.width);
 				if(last2.i == i && last2.j == j)
 					cout << " ↓";
 				else
@@ -227,6 +266,7 @@ void drawDijkstraMap(const Graph& g, const dijkstra_map& dMap, const v_status& v
     }
 }
 ////////////////////////////////////////////////////////////////////////////
+// OPERATOR OVERLOADS
 ostream& operator<<(ostream& stream, const Pos& position)
 {
 	stream << "{" << position.i << "," << position.j << "}";
@@ -237,37 +277,14 @@ ostream& operator<<(ostream& stream, const dijkstraNode& n2)
 	stream << n2.position << n2.last << "-" << n2.distance;
 	return stream;
 }
+// Implémentation du l'opérateur LESS pour la file de priorité
+// utilisant les dijkstraNode
 bool operator<(const dijkstraNode& n1, const dijkstraNode& n2)
 {
 	return n1.distance > n2.distance;
 }
 ////////////////////////////////////////////////////////////////////////////
-void dijNeiboor(const Graph& g, dijkstra_map& dMap, unsigned i, unsigned j, unsigned i1, unsigned j1, v_status& status, priority_queue<dijkstraNode>& file)
-{
-	if ((i1 >= 0 && i1 < g.height) && (j1 >= 0 && j1 < g.width) && (status[i1 * g.width + j1] != black))
-	{
-		int localDistanceToIt = sqrt(1 + pow(getVertex(g,i,j,self) - getVertex(g,i1,j1,self),2));
-		int globalDistanceToIt = dMap[i * g.width + j].distance + localDistanceToIt;
-		if(dMap[i1 * g.width + j1].distance > globalDistanceToIt)
-		{
-			dMap[i1 * g.width + j1].distance = globalDistanceToIt;
-			dMap[i1 * g.width + j1].last = {i, j};
-		}
-		if(status[i1 * g.width + j1] == white)
-		{
-			setVectorStatus(status, i1, j1, g.width, grey);
-			file.push(dMap[i1 * g.width + j1]);
-		}
-	}
-}
-void dijNode(const Graph& g,dijkstra_map& dMap, unsigned i, unsigned j, v_status& status, priority_queue<dijkstraNode>& file)
-{		
-	dijNeiboor(g, dMap, i, j, i-1, j, status, file);
-	dijNeiboor(g, dMap, i, j, i+1, j, status, file);
-	dijNeiboor(g, dMap, i, j, i, j-1, status, file);
-	dijNeiboor(g, dMap, i, j, i, j+1, status, file);
-		
-}
+// DIJKSTRA
 void Dijkstra(appParameters parameters, const Graph& g, unsigned iStart, unsigned jStart)
 {
 	//------------------------- datas
@@ -279,29 +296,57 @@ void Dijkstra(appParameters parameters, const Graph& g, unsigned iStart, unsigne
 	
 	//------------------------- inits
     initVectorStatus(g, status);
-	for (unsigned i = 0; i < g.height; i++) {
-        for (unsigned j = 0; j < g.width; j++) {
-			dMap.push_back({{i,j},{iStart,jStart},10000});
-		}
-	}
+	initDijkstraMap(g, dMap);
 	
 	//------------------------- execution inits
-	dMap[iStart * g.width + jStart].distance = 0;
+	setDijkstraMapDistance(dMap,iStart,jStart,g.width,0);
     setVectorStatus(status, iStart, jStart, g.width, grey);
-	file.push(dMap[iStart * g.width + jStart]);
+	file.push(getDijkstraMapNode(dMap,iStart,jStart,g.width));
 	
 	//------------------------- execute
+	
 	while(!file.empty()) 
 	{
+		system("clear");
+		// --- récupérer le noeud actuel
         pos_actuelle = file.top();
 		unsigned i = pos_actuelle.position.i;
 		unsigned j = pos_actuelle.position.j;
+		// --- colorer en noir
         setVectorStatus(status, i, j, g.width, black);
-		dijNode(g,dMap,i,j,status,file);
 		
+		// --- travailler sur ses voisins
+		Pos voisins[4] = {{i-1,j},{i,j+1},{i+1,j},{i,j-1}};
+		for(int k=0;k<4;++k)
+		{
+			unsigned i1 = voisins[k].i;
+			unsigned j1 = voisins[k].j;
+			
+			// --- vérifier que le voisin existe et qu'il puisse fournir de nouveaux noeuds
+			if ((i1 >= 0 && i1 < g.height) && (j1 >= 0 && j1 < g.width) && (getVectorStatus(status,i1,j1,g.width) != black))
+			{
+				// --- calcule de sa distance avec le noeud actuel
+				unsigned localDistanceToIt = sqrt(1 + pow(getVertex(g,i,j,self) - getVertex(g,i1,j1,self),2));
+				unsigned globalDistanceToIt = getDijkstraMapDistance(dMap,i,j,g.width) + localDistanceToIt;
+				
+				// --- mise à jour de la distance du noeud avec son prédécesseur
+				if(getDijkstraMapDistance(dMap,i1,j1,g.width) > globalDistanceToIt)
+				{
+					setDijkstraMapDistance(dMap,i1,j1,g.width,globalDistanceToIt);
+					setDijkstraMapLast(dMap,i1,j1,g.width,i, j);
+				}
+				// --- coloration du noeud
+				if(getVectorStatus(status,i1,j1,g.width) == white)
+				{
+					setVectorStatus(status, i1, j1, g.width, grey);
+					file.push(getDijkstraMapNode(dMap,i1,j1,g.width));
+				}
+			}
+		}		
 		
+		// --- mise à jour de la file de priorité et affichage de fin d'itération
         file.pop();
-        system("clear");
+		
         drawDijkstraMap(g, dMap, status, parameters.useColor);
 		if(parameters.drawMemory)
 		{
@@ -323,6 +368,7 @@ void Dijkstra(appParameters parameters, const Graph& g, unsigned iStart, unsigne
 	}
 }
 ////////////////////////////////////////////////////////////////////////////
+// LARGEUR
 void Largeur(appParameters parameters, const Graph& g, unsigned iStart, unsigned jStart)
 {
     v_status status;
@@ -379,6 +425,7 @@ void Largeur(appParameters parameters, const Graph& g, unsigned iStart, unsigned
     }
 }
 ////////////////////////////////////////////////////////////////////////////
+// PROFONDEUR
 void Profondeur(appParameters parameters, const Graph& g, unsigned iStart, unsigned jStart)
 {
     v_status status;

@@ -18,7 +18,7 @@ typedef struct Pos {
 typedef struct dijkstraNode {
 	Pos position;
 	Pos last;
-	int distance;
+	unsigned distance;
 	
 } dijkstraNode;
 
@@ -61,7 +61,16 @@ void drawGraph(const Graph& g);
 
 void initVectorStatus(const Graph& g, v_status& v);
 void setVectorStatus(v_status& vect, unsigned i, unsigned j, unsigned width, color c);
-void drawVectorStatus(const Graph& g, const v_status& vect);
+color getVectorStatus(const v_status& vect, unsigned i, unsigned j, unsigned width);
+void drawVectorStatus(const Graph& g, const v_status& vect, bool useColor);
+
+void initDijkstraMap(const Graph& g, dijkstra_map& dMap);
+void setDijkstraMapDistance(dijkstra_map& dMap, unsigned i, unsigned j, unsigned width, unsigned distance);
+void setDijkstraMapLast(dijkstra_map& dMap, unsigned i, unsigned j, unsigned width, unsigned i1, unsigned j1);
+dijkstraNode getDijkstraMapNode(const dijkstra_map& dMap, unsigned i, unsigned j, unsigned width);
+unsigned getDijkstraMapDistance(const dijkstra_map& dMap, unsigned i, unsigned j, unsigned width);
+Pos getDijkstraMapLast(const dijkstra_map& dMap, unsigned i, unsigned j, unsigned width);
+void drawDijkstraMap(const Graph& g, const dijkstra_map& dMap, const v_status& vect, bool useColor);
 
 void Dijkstra(appParameters parameters, const Graph& g, unsigned iStart, unsigned jStart);
 void Largeur(appParameters parameters,const Graph& g, unsigned iStart, unsigned jStart);
