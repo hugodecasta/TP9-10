@@ -11,6 +11,12 @@ using namespace std;
 ////////////////////////////// DATAS
 
 typedef int vertex;
+typedef struct Graph {
+	unsigned width, height;
+	vertex* grid;
+
+} Graph;
+
 typedef struct Pos {
     unsigned i, j;
 } Pos;
@@ -21,18 +27,12 @@ typedef struct dijkstraNode {
 	unsigned distance;
 	
 } dijkstraNode;
-
-typedef struct Graph {
-	unsigned width, height;
-	vertex* grid;
-
-} Graph;
+typedef vector<dijkstraNode> dijkstra_map;
 
 enum orient {north, south, east, west, self};
 
 enum color {white, grey, black};
 typedef vector<color> v_status;
-typedef vector<dijkstraNode> dijkstra_map;
 
 enum algorithm {dijkstra, profondeur, largeur};
 typedef struct appParameters
@@ -59,6 +59,7 @@ void drawGraph(const Graph& g);
 
 ////////////////////////////// PARCOURS
 
+////VECTOR D'ÉTAT (STOCKAGE DES COULEURS)
 void initVectorStatus(const Graph& g, v_status& v);
 void setVectorStatus(v_status& vect, unsigned i, unsigned j, unsigned width, color c);
 color getVectorStatus(const v_status& vect, unsigned i, unsigned j, unsigned width);
@@ -73,7 +74,7 @@ Pos getDijkstraMapLast(const dijkstra_map& dMap, unsigned i, unsigned j, unsigne
 void drawDijkstraMap(const Graph& g, const dijkstra_map& dMap, const v_status& vect, bool useColor);
 
 void Dijkstra(appParameters parameters, const Graph& g, unsigned iStart, unsigned jStart);
-void Largeur(appParameters parameters,const Graph& g, unsigned iStart, unsigned jStart);
-void Profondeur(appParameters parameters,const Graph& g, unsigned iStart, unsigned jStart);
+void Largeur(appParameters parameters, const Graph& g, unsigned iStart, unsigned jStart);
+void Profondeur(appParameters parameters, const Graph& g, unsigned iStart, unsigned jStart);
 
 #endif /* GRAPHE_HPP */
