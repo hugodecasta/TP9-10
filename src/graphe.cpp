@@ -252,7 +252,7 @@ void drawDijkstraMap(const Graph& g, const dijkstra_map& dMap, const v_status& v
             Pos last = getDijkstraMapLast(dMap,i,j,g.width);
             if(last.i == i+1 && last.j == j)
                 cout << " ↑";
-            else if(i<g.height)
+            else if(i < g.height)
             {
                 Pos last2 = getDijkstraMapLast(dMap,i+1,j,g.width);
                 if(last2.i == i && last2.j == j)
@@ -317,7 +317,7 @@ void Dijkstra(appParameters parameters, const Graph& g, unsigned iStart, unsigne
 
         // --- travailler sur ses voisins
         Pos voisins[4] = {{i-1,j},{i,j+1},{i+1,j},{i,j-1}};
-        for(int k=0;k<4;++k)
+        for(int k=0 ; k < 4; ++k)
         {
             unsigned i1 = voisins[k].i;
             unsigned j1 = voisins[k].j;
@@ -352,7 +352,7 @@ void Dijkstra(appParameters parameters, const Graph& g, unsigned iStart, unsigne
         {
             priority_queue<dijkstraNode> file2(file);
             unsigned size = file2.size();
-            for(unsigned i=0;i<size;++i)
+            for(unsigned i=0 ; i < size; ++i)
             {
                 cout << file2.top() << endl;
                 file2.pop();
@@ -383,7 +383,7 @@ void Largeur(appParameters parameters, const Graph& g, unsigned iStart, unsigned
     while(!file.empty()) {
         pos_actuelle = file.front();
 
-        // --- on découvre tous les voisins non-découverts et on les ajoute dans la file
+        // --- on découvre tous les voisins non-découvert et on les ajoute dans la file
         if (((int) pos_actuelle.i - 1 >= 0) && (status[(pos_actuelle.i - 1) * g.width + pos_actuelle.j] == white)) {
             setVectorStatus(status, pos_actuelle.i - 1, pos_actuelle.j, g.width, grey);
             file.push({pos_actuelle.i - 1, pos_actuelle.j});
@@ -449,7 +449,7 @@ void Profondeur(appParameters parameters, const Graph& g, unsigned iStart, unsig
         // --- on dépile avant d'empiler les voisins pour éviter de dépiler un voisin
         pile.pop();
 
-        // --- on découvre tous les voisins non-découverts et on les ajoute dans la pile
+        // --- on découvre tous les voisins non-découvert et on les ajoute dans la pile
         if (((int) pos_actuelle.i - 1 >= 0) && (status[(pos_actuelle.i - 1) * g.width + pos_actuelle.j] == white)) {
             setVectorStatus(status, pos_actuelle.i - 1, pos_actuelle.j, g.width, grey);
             pile.push({pos_actuelle.i - 1, pos_actuelle.j});
@@ -478,7 +478,7 @@ void Profondeur(appParameters parameters, const Graph& g, unsigned iStart, unsig
         {
             stack<Pos> pile2(pile);
             unsigned size = pile2.size();
-            for(unsigned i=0;i<size;++i)
+            for(unsigned i=0; i < size; ++i)
             {
                 cout << pile2.top() << endl;
                 pile2.pop();

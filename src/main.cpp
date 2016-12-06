@@ -2,19 +2,7 @@
 
 void drawUsage()
 {
-	cout << "Usage : filename Algorithm [Options]" << endl;
-	cout << endl << " filename:" << endl;
-	cout << "\tle fichier *.grd contenant le graphe à utiliser" << endl;
-	cout << endl << " Algorithm:" << endl;
-	cout << "\t-D : parcours selon l'algorithm de Dijkstra" << endl;
-	cout << "\t-P : parcours en profondeur" << endl;
-	cout << "\t-L : parcours en largeure" << endl;
-	cout << endl << " Options:" << endl;
-	cout << "\t-c : afficher la trace avec couleurs" << endl;
-	cout << "\t-m : afficher l'objet mémoire utiliser (pile, file ...)" << endl;
-	cout << "\t     (si vous utilisez cette option, assurez-vous que votre console soit assez grande)" << endl;
-	cout << "\t-i : utiliser un input utilisateur entre chaque itération au lieu d'un Delay" << endl;
-	cout << "\t-t <delay> : temps (seconde) entre deux itérations lors d'une execution automatique" << endl;
+    system("cat usage.txt");
 }
 
 bool parseArgv(int argc, char* argv[], appParameters& aParams)
@@ -86,7 +74,7 @@ int main(int argc, char* argv[])
 		return 1;
 	}
 
-	// --- execution de l'algorithm de parcour
+	// --- execution de l'algorithme de parcours
 	switch(aParams.usedAlgorithm)
 	{
 		case dijkstra:
